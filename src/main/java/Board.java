@@ -85,6 +85,7 @@ public class Board {
             if (xPos == monster.getXPos() && yPos == monster.getYPos()){
             System.out.println(monster.greet());
             System.out.println("You got caught by a monster! GAME OVER!");
+            System.out.println(Person.getPerson());
             gameOver = true;
             return;
             }
