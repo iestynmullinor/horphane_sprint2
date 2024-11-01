@@ -21,21 +21,13 @@ public class Player {
         return yPos;
     }
 
-    public void move(String direction){
-        switch (direction) {
-            case "up":
-                this.yPos+=1;
-                break;
-            case "down":
-                this.yPos-=1;
-                break;
-            case "left":
-                this.xPos-=1;
-                break;
-            case "right":
-                this.xPos+=1;
-                break;
-        }
+    public int[] getPosition() {
+        return new int[]{xPos, yPos};
+    }
+
+    public void move(int xPos, int yPos) {
+        this.xPos = xPos;
+        this.yPos = yPos;
     }
 
     @Override

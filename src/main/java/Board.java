@@ -8,7 +8,8 @@ public class Board {
     private Treasure treasure;
     private int distanceFromTreasure;
     private int numberOfMonsters;
-    private Monster[] monsters = new Monster[numberOfMonsters];
+    private Monster[] monsters;
+    private boolean gameOver;
 
     Deque<int[]> positionsStack = new ArrayDeque<>();
 
@@ -16,6 +17,8 @@ public class Board {
         this.size = size;
         this.gameBoard = new Object[size][size];
         this.numberOfMonsters = size - 2;
+        this.monsters = new Monster[numberOfMonsters];
+        this.gameOver = false;
     }
 
     public void initialise() {
@@ -27,19 +30,23 @@ public class Board {
         this.addPlayerAndTreasureToBoard();
     }
     
-    public void updateBoardEachTurn() {
+    public void updateBoardAfterTurn() {
         int newPosx = player.getXPos();
         int newPosy = player.getYPos();
 
         for (int i = 0; i < size; i++){
             for (int j = 0; j < size; j++){
-                if (gameBoard[i][j].equals(this.player)){
+                if (gameBoard[i][j] instanceof Player){
                     gameBoard[i][j] = null;
                 }
             }
         }
 
         gameBoard[newPosx][newPosy] = this.player;
+    }
+    
+    public boolean getGameOver() {
+        return gameOver;
     }
 
     public void checkMoveValidity(String direction) {
@@ -54,24 +61,47 @@ public class Board {
         int xPos = player.getXPos();
         int yPos = player.getYPos();
 
+        System.out.println("YOU ARE GOING: " + direction);
+        System.out.println("YOU ARE GOING: " + xPos + " " + yPos);
         switch (direction) {
             case "up":
-                yPos+=1;
+                System.out.println("You have moved up");
+                yPos += 1;
 
             case "down":
-                yPos-=1;
+                yPos -= 1;
 
             case "left":
-                xPos-=1;
+                xPos -=1;
 
             case "right":
                 xPos+=1;
 
-
         if (xPos > (size - 1) || yPos > (size - 1) || xPos < 0 || yPos < 0){
             System.out.println("You have hit a wall, try again.");
-            
+            return;
         }
+        else if (xPos == treasure.getXPos() && yPos == treasure.getYPos()){
+            System.out.println("You have found the treasure, well done!");
+            gameOver = true;
+            return;
+        }
+        for (Monster monster : monsters) {
+
+            if (xPos == monster.getXPos() && yPos == monster.getYPos()){
+            System.out.println(monster.greet());
+            System.out.println("You got caught by a monster! GAME OVER!");
+            gameOver = true;
+            return;
+            }
+        }
+
+        System.out.println("YOU ARE GOING: " + xPos + " " + yPos);
+
+        player.move(xPos, yPos);
+
+
+
         }
     }
 
