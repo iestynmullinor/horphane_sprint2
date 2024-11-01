@@ -1,0 +1,38 @@
+
+Requirements
+
+As the game player
+I would like to specify the size of the grid that I play on
+so that I can make the game easier or harder
+
+As the game player
+I would like the game to start my playing piece at a random location on the grid
+to make the game more interesting
+
+As the game player
+I would like the game to place some treasure on a random square in the grid for me to find
+to win the game
+
+As the game player
+I would like the game to print out a message when I find the treasure
+so that I know I have won the game
+
+As the game player
+I would like to move my playing piece around the grid (up, down, left right) to find the treasure
+so that I can win the game
+
+As the game player
+I would like the game to tell me how far away I am from the treasure after each move
+so that I can decide what my next move should be
+
+As the game player
+I would like the game to add some monsters at random locations to catch me
+so that I lose the game
+
+As the game player
+I would like the game to add different types of monster
+so that the game is game interesting
+
+As the game player
+I would like each monster to greet me differently
+so that the game is more fun

@@ -1,0 +1,21 @@
+
+Classes
+
+
+Game
+    - Attributes (hasWon, board, player, monster[], treasure)
+    - Methods (winGame(), makeTurn(), distanceFromTreasure())
+
+Board
+    - Attributes(size)
+    - Methods (initialisePositions(), initialiseNumMonsters(), initialisePositionMonsters()
+
+Player
+    - Attributes (position)
+    - Methods (move())
+
+
+Monster - Subclasses(), Attributes(position), Methods(kill(), greet())
+
+Treasure - Attributes(position)
+
