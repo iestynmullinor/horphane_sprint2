@@ -5,5 +5,9 @@ public class Main {
         Board b = new Board(4);
 
         b.show();
+
+//        Game g = new Game();
+//        g.getBoardSize();
     }
+
 }

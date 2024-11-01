@@ -4,11 +4,11 @@ Classes
 
 Game
     - Attributes (hasWon, board, player, monster[], treasure)
-    - Methods (winGame(), makeTurn(), distanceFromTreasure())
+    - Methods (winGame(), makeTurn())
 
 Board
     - Attributes(size)
-    - Methods (initialisePositions(), initialiseNumMonsters(), initialisePositionMonsters()
+    - Methods (initialisePositions(), initialiseNumMonsters(), initialisePositionMonsters(), distanceFromTreasure())
 
 Player
     - Attributes (position)
