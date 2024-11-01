@@ -8,6 +8,10 @@ public class FriendlyMonster extends Monster{
         super(xPos, yPos);
     }
 
+    public FriendlyMonster(int[] position) {
+       super(position[0], position[1]);
+    }
+
     @Override
     public String greet() {
         List<String> greetings = new ArrayList<>();
@@ -28,7 +32,7 @@ public class FriendlyMonster extends Monster{
     
     @Override
     public String toString() {
-        return "FM";
+        return "FriendlyMonster";
     }
 
 }

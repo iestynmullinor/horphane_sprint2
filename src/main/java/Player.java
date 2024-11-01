@@ -8,6 +8,11 @@ public class Player {
         this.yPos = yPos;
     }
 
+    public Player(int[] position) {
+        this.xPos = position[0];
+        this.yPos = position[1];
+    }
+
     public int getXPos() {
         return xPos;
     }

@@ -1,7 +1,4 @@
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 public class Board {
 
@@ -10,66 +7,87 @@ public class Board {
     private Player player;
     private Treasure treasure;
     private int distanceFromTreasure;
-    private int numberOfMonsters = 4;
+    private int numberOfMonsters;
     private Monster[] monsters = new Monster[numberOfMonsters];
-    private int[][] monsterPositions = new int[numberOfMonsters][2];
-    int[] playerPosition;
-    int[] treasurePosition;
+
+    Deque<int[]> positionsStack = new ArrayDeque<>();
 
     public Board(int size) {
         this.size = size;
         this.gameBoard = new Object[size][size];
+        this.numberOfMonsters = size - 2;
     }
 
     public void initialise() {
         this.generateBoardPositions();
         this.setMonsters();
         this.addMonstersToBoard();
-        this.player = new Player(playerPosition[0], playerPosition[1]);
-        this.treasure = new Treasure(treasurePosition[0], treasurePosition[1]);
-        this.addPlayerandTreasureToBoard();
+        this.player = new Player(positionsStack.pop());
+        this.treasure = new Treasure(positionsStack.pop());
+        this.addPlayerAndTreasureToBoard();
     }
+    
+    public void updateBoardEachTurn() {
+        int newPosx = player.getXPos();
+        int newPosy = player.getYPos();
 
-
-    public void addMonstersToBoard() {
-//         Method to loop through monsters and set their positions on the board
-        for (Monster monster : monsters) {
-            int xcoord = monster.getXPos();
-            int ycoord = monster.getYPos();
-            gameBoard[xcoord][ycoord] = monster;
+        for (int i = 0; i < size; i++){
+            for (int j = 0; j < size; j++){
+                if (gameBoard[i][j].equals(this.player)){
+                    gameBoard[i][j] = null;
+                }
+            }
         }
 
+        gameBoard[newPosx][newPosy] = this.player;
     }
 
-    public void addPlayerandTreasureToBoard() {
-        int playerx = this.player.getXPos();
-        int playery = this.player.getYPos();
-        int treasurex = this.treasure.getXPos();
-        int treasurey = this.treasure.getYPos();
+    public void checkMoveValidity(String direction) {
+        // if wall, print you've hit a wall, try again
+            // if Newx or Newy is > than board size?
+        // if treasure, print game won
+            // if new coordinates == treasure
+        // if monster, print greeting, game over
+            // if new coordinates == monster
+        // else move valid
 
-        gameBoard[playerx][playery] = this.player;
-        gameBoard[treasurex][treasurey] = this.treasure;
+        int xPos = player.getXPos();
+        int yPos = player.getYPos();
+
+        switch (direction) {
+            case "up":
+                yPos+=1;
+
+            case "down":
+                yPos-=1;
+
+            case "left":
+                xPos-=1;
+
+            case "right":
+                xPos+=1;
+
+
+        if (xPos > (size - 1) || yPos > (size - 1) || xPos < 0 || yPos < 0){
+            System.out.println("You have hit a wall, try again.");
+            
+        }
+        }
     }
-
 
     public void generateBoardPositions() {
         // Get random coordinates for n monsters and 1 treasure and 1 player
         int numPositions = this.numberOfMonsters + 2;
         int[][] positions = generateUniqueRandomPositions(numPositions);
 
-        playerPosition = positions[0];
-        treasurePosition = positions[1];
-
-        for (int i = 2; i < numPositions; i++) {
-            this.monsterPositions[i-2] = positions[i];
-        }
+        this.positionsStack.addAll(Arrays.asList(positions));
     }
 
     public void setMonsters() {
         // assign type of monster to a position depending on the different coordinates
         for (int i=0; i<numberOfMonsters; i++){
 
-            int[] position = monsterPositions[i];
+            int[] position = positionsStack.pop();
 
             if (i % 2 == 0 ) {
                 this.monsters[i] = new FriendlyMonster(position[0], position[1]);
@@ -79,6 +97,34 @@ public class Board {
         }
     }
 
+    public void addMonstersToBoard() {
+//         Method to loop through monsters and set their positions on the board
+        for (Monster monster : monsters) {
+            int xCoOrd = monster.getXPos();
+            int yCoOrd = monster.getYPos();
+            gameBoard[xCoOrd][yCoOrd] = monster;
+        }
+    }
+
+    public void calculateDistanceFromTreasure() {
+        int yDifference = Math.abs(player.getYPos() - treasure.getYPos());
+        int xDifference = Math.abs(player.getXPos() - treasure.getXPos());
+        distanceFromTreasure = yDifference + xDifference;
+    }
+
+    public int getDistanceFromTreasure() {
+        return distanceFromTreasure;
+    }
+
+    public void addPlayerAndTreasureToBoard() {
+        int playerx = this.player.getXPos();
+        int playery = this.player.getYPos();
+        int treasurex = this.treasure.getXPos();
+        int treasurey = this.treasure.getYPos();
+
+        gameBoard[playerx][playery] = this.player;
+        gameBoard[treasurex][treasurey] = this.treasure;
+    }
 
     public int getSize() {
         return this.size;
@@ -88,11 +134,6 @@ public class Board {
         return gameBoard;
     };
 
-//    public void initializeBoard() {
-////        Create a board of size 'size' and output it
-//        this.gameBoard   = new Object[size][size];
-//
-//    }
 
     // Generates unique random positions in the board
     public int[][] generateUniqueRandomPositions(int noPositions) {

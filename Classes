@@ -15,7 +15,7 @@ Player
     - Methods (move())
 
 
-Monster - Subclasses(), Attributes(position), Methods(kill(), greet())
+Monster - Subclasses(), Attributes(position), Methods(greet())
 
 Treasure - Attributes(position)
 

@@ -8,6 +8,11 @@ public class Treasure {
         this.yPos = yPos;
     }
 
+    public Treasure(int[] position) {
+        this.xPos = position[0];
+        this.yPos = position[1];
+    }
+
     public int getXPos() {
         return xPos;
     }
