@@ -17,4 +17,9 @@ public abstract class Monster {
     }
 
     public abstract String greet();
+
+    @Override
+    public String toString() {
+        return "Monster";
+    }
 }

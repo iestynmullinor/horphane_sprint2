@@ -26,5 +26,10 @@ public class EvilMonster extends Monster{
         return greetings.get(random.nextInt(greetings.size()));
     }
 
+    @Override
+    public String toString() {
+        return "EM";
+    }
+
 
 }

@@ -25,5 +25,10 @@ public class FriendlyMonster extends Monster{
         Random random = new Random();
         return greetings.get(random.nextInt(greetings.size()));
     }
+    
+    @Override
+    public String toString() {
+        return "FM";
+    }
 
 }

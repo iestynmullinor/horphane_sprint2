@@ -15,4 +15,9 @@ public class Treasure {
     public int getYPos() {
         return yPos;
     }
+
+    @Override
+    public String toString() {
+        return "Treasure";
+    }
 }

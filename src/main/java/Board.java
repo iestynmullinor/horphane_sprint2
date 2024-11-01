@@ -10,22 +10,24 @@ public class Board {
     private Player player;
     private Treasure treasure;
     private int distanceFromTreasure;
-    private int numberOfMonsters = 2;
+    private int numberOfMonsters = 4;
     private Monster[] monsters = new Monster[numberOfMonsters];
     private int[][] monsterPositions = new int[numberOfMonsters][2];
     int[] playerPosition;
     int[] treasurePosition;
 
-    public Board(int size){
+    public Board(int size) {
         this.size = size;
-        this.gameBoard   = new Object[size][size];
-        //this.gameBoard   = new Object[size][size];
+        this.gameBoard = new Object[size][size];
+    }
 
-        this.setBoardPositions();
+    public void initialise() {
+        this.generateBoardPositions();
         this.setMonsters();
         this.addMonstersToBoard();
         this.player = new Player(playerPosition[0], playerPosition[1]);
         this.treasure = new Treasure(treasurePosition[0], treasurePosition[1]);
+        this.addPlayerandTreasureToBoard();
     }
 
 
@@ -39,8 +41,32 @@ public class Board {
 
     }
 
-    // here we create the monsters with their random positions
+    public void addPlayerandTreasureToBoard() {
+        int playerx = this.player.getXPos();
+        int playery = this.player.getYPos();
+        int treasurex = this.treasure.getXPos();
+        int treasurey = this.treasure.getYPos();
+
+        gameBoard[playerx][playery] = this.player;
+        gameBoard[treasurex][treasurey] = this.treasure;
+    }
+
+
+    public void generateBoardPositions() {
+        // Get random coordinates for n monsters and 1 treasure and 1 player
+        int numPositions = this.numberOfMonsters + 2;
+        int[][] positions = generateUniqueRandomPositions(numPositions);
+
+        playerPosition = positions[0];
+        treasurePosition = positions[1];
+
+        for (int i = 2; i < numPositions; i++) {
+            this.monsterPositions[i-2] = positions[i];
+        }
+    }
+
     public void setMonsters() {
+        // assign type of monster to a position depending on the different coordinates
         for (int i=0; i<numberOfMonsters; i++){
 
             int[] position = monsterPositions[i];
@@ -50,19 +76,6 @@ public class Board {
             } else {
                 this.monsters[i] = new EvilMonster(position[0], position[1]);
             }
-        }
-    }
-
-    public void setBoardPositions() {
-        // Get random coordinates for n monsters and 1 treasure and 1 player
-        int numPositions = this.numberOfMonsters + 2;
-        int[][] positions = generateUniqueRandomPositions(numPositions);
-
-        playerPosition = positions[0];
-        treasurePosition = positions[1];
-
-        for (int i = 2; i < numPositions; i++) {
-            this.monsterPositions[i] = positions[i];
         }
     }
 
