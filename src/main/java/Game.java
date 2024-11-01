@@ -37,12 +37,13 @@ public class Game {
 
     public void play() {
         while (!this.board.getGameOver()) {
-            this.board.show();
+            //this.board.show();
             this.board.calculateDistanceFromTreasure();
             System.out.println("You are " + this.board.getDistanceFromTreasure() + " moves from the treasure");
             String direction = getDirection();
             this.board.checkMoveValidity(direction);
             this.board.updateBoardAfterTurn();
+
 
         }
     }

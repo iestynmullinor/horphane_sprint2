@@ -43,6 +43,7 @@ public class Board {
         }
 
         gameBoard[newPosx][newPosy] = this.player;
+        //System.out.println(player.getXPos()+","+player.getYPos());
     }
     
     public boolean getGameOver() {
@@ -61,21 +62,14 @@ public class Board {
         int xPos = player.getXPos();
         int yPos = player.getYPos();
 
-        System.out.println("YOU ARE GOING: " + direction);
-        System.out.println("YOU ARE GOING: " + xPos + " " + yPos);
+//        System.out.println("YOU ARE GOING: " + direction);
+//        System.out.println("YOU ARE GOING: " + xPos + " " + yPos);
         switch (direction) {
-            case "up":
-                System.out.println("You have moved up");
-                yPos += 1;
-
-            case "down":
-                yPos -= 1;
-
-            case "left":
-                xPos -=1;
-
-            case "right":
-                xPos+=1;
+            case "up" -> yPos += 1;
+            case "down" -> yPos -= 1;
+            case "left" -> xPos -= 1;
+            case "right" -> xPos += 1;
+        }
 
         if (xPos > (size - 1) || yPos > (size - 1) || xPos < 0 || yPos < 0){
             System.out.println("You have hit a wall, try again.");
@@ -96,14 +90,15 @@ public class Board {
             }
         }
 
-        System.out.println("YOU ARE GOING: " + xPos + " " + yPos);
+//        System.out.println("YOU ARE GOING: " + xPos + " " + yPos);
 
         player.move(xPos, yPos);
 
 
 
         }
-    }
+
+
 
     public void generateBoardPositions() {
         // Get random coordinates for n monsters and 1 treasure and 1 player
